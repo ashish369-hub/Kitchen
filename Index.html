@@ -484,6 +484,433 @@ select.menu-select{
   #printArea .prow .pqty{font-weight:700;color:#a85b00;}
   #printArea .prow .pnote{font-size:11.5px;color:#777;font-style:italic;display:block;margin-top:2px;}
 }
+
+/* ============================================================
+   REVIEWS SYSTEM
+   ============================================================ */
+.review-hero{
+  background:linear-gradient(135deg, rgba(240,184,61,0.12), rgba(47,143,224,0.08) 60%);
+  border:1px solid rgba(240,184,61,0.28);
+  border-radius:var(--radius);padding:20px;margin-bottom:16px;
+}
+.review-hero-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:2px;}
+.review-hero-sub{font-size:12.5px;color:var(--lilac-dim);}
+
+.rev-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.rev-tab{
+  flex:1;text-align:center;padding:10px 6px;border-radius:11px;
+  font-size:12.5px;font-weight:600;color:var(--lilac-dim);
+  border:1px solid var(--line);background:var(--card);cursor:pointer;
+}
+.rev-tab.active{background:var(--card-raised);color:var(--gold);border-color:var(--gold-deep);}
+
+/* --- Submit Form --- */
+.rev-form-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;margin-bottom:14px;
+}
+.rev-menu-sel{
+  width:100%;appearance:none;-webkit-appearance:none;
+  background:var(--card-raised);border:1px solid var(--line);color:var(--cream);
+  font-family:'Fraunces',serif;font-size:17px;font-weight:600;
+  padding:13px 36px 13px 14px;border-radius:var(--radius-sm);margin-bottom:12px;
+}
+.rev-section-label{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--lilac-dim);font-weight:700;margin:14px 0 8px;
+}
+.rev-item-row{
+  background:var(--card-raised);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;margin-bottom:8px;
+}
+.rev-item-name{font-size:14.5px;font-weight:600;color:var(--cream);margin-bottom:8px;}
+.rev-slider-wrap{display:flex;align-items:center;gap:10px;}
+.rev-slider-label{font-size:11.5px;color:var(--lilac-dim);width:52px;flex-shrink:0;}
+.rev-slider{
+  flex:1;-webkit-appearance:none;appearance:none;height:6px;
+  border-radius:4px;background:var(--bg-deep);outline:none;cursor:pointer;
+}
+.rev-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--gold);cursor:pointer;box-shadow:0 0 6px rgba(240,184,61,.4);
+}
+.rev-slider-val{
+  font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--gold);
+  width:28px;text-align:center;flex-shrink:0;
+}
+.rev-overall-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--card-raised);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;margin-bottom:12px;
+}
+.rev-overall-label{font-size:14px;font-weight:600;color:var(--cream);}
+.rev-stars{display:flex;gap:6px;}
+.rev-star{font-size:26px;cursor:pointer;opacity:.3;transition:opacity .12s, transform .1s;}
+.rev-star.on{opacity:1;}
+.rev-star:active{transform:scale(0.88);}
+.rev-notes-input{
+  width:100%;background:var(--card-raised);border:1px solid var(--line);
+  color:var(--cream);font-family:'Space Grotesk';font-size:14px;
+  padding:12px 14px;border-radius:12px;min-height:80px;resize:vertical;
+}
+.rev-notes-input::placeholder{color:var(--lilac-dim);}
+.rev-headcount-input{
+  width:100%;background:var(--card-raised);border:1px solid var(--line);
+  color:var(--cream);font-family:'Fraunces',serif;font-size:18px;font-weight:600;
+  padding:11px 14px;border-radius:12px;text-align:center;
+}
+.rev-submit-btn{
+  width:100%;padding:15px;border-radius:13px;border:none;
+  background:linear-gradient(120deg, var(--gold), var(--gold-deep));color:#241405;
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:transform .1s, opacity .15s;margin-top:14px;
+}
+.rev-submit-btn:active{transform:scale(0.98);}
+
+/* --- Past Reviews List --- */
+.rev-filter-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:14px;}
+.rev-filter-chip{
+  flex-shrink:0;padding:7px 13px;border-radius:20px;
+  font-size:12px;font-weight:600;color:var(--lilac-dim);
+  border:1px solid var(--line);background:var(--card);cursor:pointer;white-space:nowrap;
+}
+.rev-filter-chip.active{background:var(--card-raised);color:var(--gold);border-color:var(--gold-deep);}
+
+.rev-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;margin-bottom:12px;
+}
+.rev-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+.rev-card-menu{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--cream);}
+.rev-card-meta{font-size:11.5px;color:var(--lilac-dim);margin-top:2px;}
+.rev-card-star-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.rev-card-stars{font-size:14px;letter-spacing:1px;}
+.rev-card-rating{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--gold);}
+
+.rev-leftover-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.rev-lo-pill{
+  background:var(--card-raised);border-radius:10px;padding:8px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.rev-lo-name{font-size:12px;color:var(--cream);font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rev-lo-bar-wrap{width:44px;flex-shrink:0;margin-left:6px;}
+.rev-lo-bar-track{height:4px;background:var(--bg-deep);border-radius:3px;overflow:hidden;}
+.rev-lo-bar-fill{height:100%;border-radius:3px;transition:width .3s;}
+.rev-lo-pct{font-size:10.5px;font-weight:700;text-align:right;margin-top:2px;}
+
+.rev-notes-display{
+  font-size:12.5px;color:var(--lilac-dim);line-height:1.45;font-style:italic;
+  border-left:2px solid var(--gold-deep);padding-left:10px;margin-top:10px;
+}
+
+/* --- AI Suggestions Panel --- */
+.rev-suggestions-wrap{margin-bottom:14px;}
+.rev-suggestion-card{
+  background:linear-gradient(135deg, rgba(47,143,224,0.10), rgba(47,143,224,0.03));
+  border:1px solid rgba(47,143,224,0.30);
+  border-radius:var(--radius);padding:16px;margin-bottom:10px;
+}
+.rev-suggestion-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.rev-suggestion-icon{
+  width:34px;height:34px;border-radius:10px;
+  background:rgba(47,143,224,0.18);display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.rev-suggestion-title{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--cream);}
+.rev-suggestion-sub{font-size:11.5px;color:var(--lilac-dim);}
+.rev-suggestion-items{display:flex;flex-direction:column;gap:6px;}
+.rev-sug-item{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:var(--card-raised);border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;
+}
+.rev-sug-item-name{font-size:13.5px;color:var(--cream);font-weight:500;}
+.rev-sug-change{font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;}
+.rev-sug-change.reduce{background:rgba(224,88,75,.15);color:var(--magenta);}
+.rev-sug-change.increase{background:rgba(47,143,224,.15);color:var(--teal);}
+.rev-sug-change.ok{background:rgba(127,217,127,.12);color:#7FD97F;}
+
+.rev-sug-loading{
+  text-align:center;padding:30px;color:var(--lilac-dim);font-size:13.5px;
+}
+.rev-sug-loading .spin{
+  display:inline-block;font-size:24px;margin-bottom:10px;
+  animation:revSpin 1.5s linear infinite;
+}
+@keyframes revSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* --- Stats Overview --- */
+.rev-stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
+.rev-stat-box{
+  background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:12px 10px;text-align:center;
+}
+.rev-stat-num{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1;}
+.rev-stat-lbl{font-size:10px;color:var(--lilac-dim);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}
+
+/* --- No data states --- */
+.rev-empty{text-align:center;padding:40px 20px;color:var(--lilac-dim);}
+.rev-empty .eicon{font-size:36px;margin-bottom:10px;opacity:.5;}
+
+
+/* ── Bulk paste import panel ── */
+.menu-modal-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.mm-tab{
+  flex:1;text-align:center;padding:9px 6px;border-radius:10px;
+  font-size:12.5px;font-weight:600;color:var(--lilac-dim);
+  border:1px solid var(--line);background:var(--card);cursor:pointer;
+}
+.mm-tab.active{background:var(--card-raised);color:var(--gold);border-color:var(--gold-deep);}
+
+.paste-area{
+  width:100%;min-height:130px;background:var(--card-raised);
+  border:1px solid var(--line);color:var(--cream);
+  font-family:'Space Grotesk',sans-serif;font-size:13.5px;line-height:1.55;
+  padding:13px 14px;border-radius:12px;resize:vertical;
+}
+.paste-area::placeholder{color:var(--lilac-dim);}
+.paste-preview{
+  background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;margin-top:10px;max-height:180px;overflow-y:auto;
+}
+.paste-preview-row{
+  display:flex;align-items:center;gap:8px;padding:5px 0;
+  border-bottom:1px solid rgba(44,66,100,0.5);font-size:13px;
+}
+.paste-preview-row:last-child{border-bottom:none;}
+.pp-name{flex:1;color:var(--cream);}
+.pp-qty{color:var(--gold);font-weight:600;font-size:12.5px;white-space:nowrap;}
+.pp-remove{
+  width:22px;height:22px;border-radius:6px;background:transparent;
+  border:none;color:var(--lilac-dim);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.paste-hint{font-size:11.5px;color:var(--lilac-dim);line-height:1.5;margin-top:8px;}
+.parse-btn{
+  width:100%;margin-top:10px;padding:12px;border-radius:12px;border:none;
+  background:rgba(47,143,224,0.18);color:var(--teal);
+  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;
+  border:1px solid rgba(47,143,224,0.3);
+}
+.parse-btn:active{opacity:.8;}
+
+/* ── Ingredient autocomplete dropdown ── */
+.ac-wrap{position:relative;flex:1.6;}
+.ac-dropdown{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:200;
+  background:var(--card-raised);border:1px solid var(--gold-deep);
+  border-radius:11px;overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,0.45);
+  max-height:180px;overflow-y:auto;
+}
+.ac-item{
+  padding:10px 13px;font-size:13.5px;color:var(--cream);cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid rgba(44,66,100,0.4);
+}
+.ac-item:last-child{border-bottom:none;}
+.ac-item:hover,.ac-item.focused{background:rgba(240,184,61,0.1);}
+.ac-item-name{flex:1;}
+.ac-item-meta{font-size:11px;color:var(--lilac-dim);}
+
+
+/* ============================================================
+   POST-SABHA REVIEW SHEET (slides up after ending sabha)
+   ============================================================ */
+.postsabha-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(6,11,20,0.75);
+  backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.postsabha-overlay.show{opacity:1;pointer-events:all;}
+.postsabha-sheet{
+  width:100%;max-height:92vh;overflow-y:auto;
+  background:var(--bg);
+  border-top:1px solid var(--line);
+  border-radius:24px 24px 0 0;
+  padding:0 0 calc(32px + var(--safe-bottom));
+  transform:translateY(100%);
+  transition:transform .38s cubic-bezier(.32,1.1,.6,1);
+}
+.postsabha-overlay.show .postsabha-sheet{transform:translateY(0);}
+
+.ps-handle{
+  width:40px;height:4px;border-radius:4px;
+  background:var(--line);margin:14px auto 0;
+}
+.ps-header{
+  padding:18px 20px 14px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(224,88,75,0.10),transparent);
+}
+.ps-eyebrow{
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--magenta);font-weight:700;margin-bottom:4px;
+  display:flex;align-items:center;gap:7px;
+}
+.ps-eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--magenta);
+  box-shadow:0 0 8px var(--magenta);
+}
+.ps-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--cream);margin:0;}
+.ps-sub{font-size:12.5px;color:var(--lilac-dim);margin-top:3px;}
+
+.ps-body{padding:18px 20px;}
+
+.ps-section-label{
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--lilac-dim);font-weight:700;margin:16px 0 8px;
+}
+.ps-section-label:first-child{margin-top:0;}
+
+/* star row */
+.ps-star-row{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px;margin-bottom:4px;
+}
+.ps-star{font-size:32px;cursor:pointer;opacity:.25;transition:opacity .12s,transform .1s;}
+.ps-star.on{opacity:1;}
+.ps-star:active{transform:scale(0.88);}
+
+/* item slider cards */
+.ps-item-card{
+  background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:12px 14px;margin-bottom:8px;
+}
+.ps-item-name{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:9px;
+  display:flex;align-items:center;gap:7px;}
+.ps-slider-row{display:flex;align-items:center;gap:8px;}
+.ps-slider-end{font-size:10.5px;color:var(--lilac-dim);width:46px;flex-shrink:0;line-height:1.25;}
+.ps-slider-end.right{text-align:right;}
+.ps-slider{
+  flex:1;-webkit-appearance:none;appearance:none;height:6px;
+  border-radius:4px;background:var(--bg-deep);outline:none;cursor:pointer;
+}
+.ps-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:22px;height:22px;
+  border-radius:50%;background:var(--gold);cursor:pointer;
+  box-shadow:0 0 8px rgba(240,184,61,.45);
+}
+.ps-slider-val{
+  font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--gold);
+  width:26px;text-align:center;flex-shrink:0;
+}
+
+.ps-notes{
+  width:100%;background:var(--card);border:1px solid var(--line);
+  color:var(--cream);font-family:'Space Grotesk';font-size:14px;
+  padding:12px 14px;border-radius:13px;min-height:72px;resize:none;
+}
+.ps-notes::placeholder{color:var(--lilac-dim);}
+
+.ps-actions{display:flex;gap:10px;margin-top:18px;}
+.ps-actions .btn{flex:1;}
+
+.ps-skip-btn{
+  text-align:center;color:var(--lilac-dim);font-size:13px;
+  padding:10px;cursor:pointer;margin-top:6px;
+}
+
+/* ── AI Analysis panel (appears after review saved) ── */
+.ai-analysis-card{
+  background:linear-gradient(135deg,rgba(47,143,224,0.12),rgba(47,143,224,0.04) 70%);
+  border:1px solid rgba(47,143,224,0.35);
+  border-radius:var(--radius);padding:16px;margin-top:14px;
+}
+.ai-analysis-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+}
+.ai-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--teal);background:rgba(47,143,224,0.15);
+  padding:3px 9px;border-radius:20px;border:1px solid rgba(47,143,224,0.3);
+}
+.ai-icon{
+  width:38px;height:38px;border-radius:11px;
+  background:rgba(47,143,224,0.18);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.ai-analysis-title{font-family:'Fraunces',serif;font-size:15.5px;font-weight:600;color:var(--cream);}
+.ai-analysis-body{
+  font-size:13.5px;color:var(--lilac-dim);line-height:1.6;
+}
+.ai-analysis-body p{margin:0 0 8px;}
+.ai-analysis-body p:last-child{margin:0;}
+.ai-analysis-body strong{color:var(--cream);font-weight:600;}
+.ai-loading{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--lilac-dim);padding:4px 0;
+}
+.ai-spinner{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;
+  border:2px solid rgba(47,143,224,0.25);
+  border-top-color:var(--teal);
+  animation:aiSpin .9s linear infinite;
+}
+@keyframes aiSpin{to{transform:rotate(360deg)}}
+.ai-error{color:var(--magenta);font-size:13px;}
+
+
+/* ── Paste tab upgrade ── */
+.paste-src-btn{
+  flex:1;text-align:center;padding:9px 6px;border-radius:10px;
+  font-size:12.5px;font-weight:600;color:var(--lilac-dim);
+  border:1px solid var(--line);background:var(--card);cursor:pointer;
+}
+.paste-src-btn.active{background:var(--card-raised);color:var(--gold);border-color:var(--gold-deep);}
+
+.parse-ai-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 16px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(120deg,rgba(47,143,224,0.22),rgba(47,143,224,0.10));
+  border:1px solid rgba(47,143,224,0.40);
+  color:var(--teal);font-family:'Space Grotesk',sans-serif;
+  font-size:14px;font-weight:700;transition:opacity .15s,transform .1s;
+  width:100%;
+}
+.parse-ai-btn:active{transform:scale(0.98);opacity:.85;}
+.parse-ai-btn:disabled{opacity:.5;pointer-events:none;}
+
+.paste-ai-status-row{
+  display:flex;align-items:center;gap:8px;
+  font-size:12.5px;color:var(--lilac-dim);
+}
+
+.paste-preview-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:6px;
+}
+.paste-preview-header span{
+  font-size:11px;color:var(--lilac-dim);text-transform:uppercase;
+  letter-spacing:.1em;font-weight:700;
+}
+.paste-clear-btn{
+  font-size:11.5px;color:var(--magenta);background:none;border:none;
+  cursor:pointer;font-weight:600;padding:0;
+}
+.paste-ai-note{
+  font-size:11.5px;color:var(--teal);margin-top:8px;line-height:1.5;
+  background:rgba(47,143,224,0.08);border:1px solid rgba(47,143,224,0.2);
+  border-radius:9px;padding:8px 11px;
+}
+/* editable preview rows */
+.paste-preview-row .pp-name-input{
+  flex:1;background:transparent;border:none;color:var(--cream);
+  font-size:13px;font-family:'Space Grotesk',sans-serif;
+  padding:0;min-width:0;
+}
+.paste-preview-row .pp-name-input:focus{outline:none;border-bottom:1px solid var(--gold-deep);}
+.paste-preview-row .pp-qty-input{
+  width:56px;background:transparent;border:none;color:var(--gold);
+  font-size:12.5px;font-weight:700;text-align:right;padding:0;
+  font-family:'Space Grotesk',sans-serif;
+}
+.paste-preview-row .pp-qty-input:focus{outline:none;border-bottom:1px solid var(--gold-deep);}
+
 </style>
 </head>
 <body>
@@ -546,6 +973,13 @@ select.menu-select{
       <div class="ttext">
         <div class="ti">Cost Management</div>
         <div class="de">Log bills after each sabha and track spend per menu</div>
+      </div>
+    </div>
+    <div class="nav-card full" onclick="goTo('reviews')" style="background:linear-gradient(135deg,rgba(240,184,61,0.12),var(--card) 70%);border-color:rgba(240,184,61,0.3);">
+      <div class="icon">⭐</div>
+      <div class="ttext">
+        <div class="ti">Reviews & Smart Suggestions</div>
+        <div class="de" id="homeReviewTeaser">Rate leftovers after each sabha · AI suggests next quantities</div>
       </div>
     </div>
   </div>
@@ -712,6 +1146,84 @@ select.menu-select{
   <div id="costEntryList"></div>
 </div>
 
+
+<!-- ============ REVIEWS ============ -->
+<div class="screen" id="screen-reviews">
+
+  <!-- Header stats -->
+  <div class="rev-stat-grid" id="revStatGrid">
+    <div class="rev-stat-box"><div class="rev-stat-num" id="revStatCount">0</div><div class="rev-stat-lbl">Reviews</div></div>
+    <div class="rev-stat-box"><div class="rev-stat-num" id="revStatRating">—</div><div class="rev-stat-lbl">Avg Rating</div></div>
+    <div class="rev-stat-box"><div class="rev-stat-num" id="revStatMenus">0</div><div class="rev-stat-lbl">Menus</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="rev-tabs">
+    <div class="rev-tab active" data-rtab="submit" onclick="setRevTab('submit')">✍️ New Review</div>
+    <div class="rev-tab" data-rtab="past" onclick="setRevTab('past')">📋 Past Reviews</div>
+    <div class="rev-tab" data-rtab="suggest" onclick="setRevTab('suggest')">✨ Suggestions</div>
+  </div>
+
+  <!-- ── TAB: Submit ── -->
+  <div id="revTabSubmit">
+    <div class="rev-form-card">
+      <div class="card-label" style="margin-bottom:10px;">Which menu are you reviewing?</div>
+      <div class="menu-select-wrap">
+        <select class="rev-menu-sel" id="revMenuSelect"></select>
+      </div>
+
+      <div class="rev-section-label">Headcount at this sabha</div>
+      <input class="rev-headcount-input" id="revHeadcount" type="number" placeholder="e.g. 120" inputmode="numeric">
+
+      <div class="rev-section-label">Leftover Level Per Item</div>
+      <div style="font-size:12px;color:var(--lilac-dim);margin-bottom:10px;">0 = completely gone · 10 = almost untouched</div>
+      <div id="revItemSliders"></div>
+
+      <div class="rev-section-label">Overall Sabha Rating</div>
+      <div class="rev-overall-row">
+        <div class="rev-overall-label">How did it go?</div>
+        <div class="rev-stars" id="revStars">
+          <span class="rev-star" data-v="1" onclick="setRevStar(1)">★</span>
+          <span class="rev-star" data-v="2" onclick="setRevStar(2)">★</span>
+          <span class="rev-star" data-v="3" onclick="setRevStar(3)">★</span>
+          <span class="rev-star" data-v="4" onclick="setRevStar(4)">★</span>
+          <span class="rev-star" data-v="5" onclick="setRevStar(5)">★</span>
+        </div>
+      </div>
+
+      <div class="rev-section-label">Notes (optional)</div>
+      <textarea class="rev-notes-input" id="revNotes" placeholder="e.g. Chaat ran out early, Pulav had plenty left…"></textarea>
+
+      <button class="rev-submit-btn" onclick="submitReview()">Save This Review →</button>
+    </div>
+  </div>
+
+  <!-- ── TAB: Past Reviews ── -->
+  <div id="revTabPast" style="display:none;">
+    <div class="rev-filter-row" id="revFilterRow">
+      <div class="rev-filter-chip active" data-rmenu="all" onclick="setRevFilter('all')">All Menus</div>
+    </div>
+    <div id="revPastList"></div>
+  </div>
+
+  <!-- ── TAB: Suggestions ── -->
+  <div id="revTabSuggest" style="display:none;">
+    <div class="card" style="background:linear-gradient(135deg, rgba(47,143,224,0.08), transparent);border-color:rgba(47,143,224,0.25);margin-bottom:14px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="font-size:24px;line-height:1;">✨</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--cream);margin-bottom:2px;">Smart Quantity Suggestions</div>
+          <div style="font-size:12.5px;color:var(--lilac-dim);line-height:1.4;">Based on your past reviews, here's how to adjust quantities next time you cook each menu.</div>
+        </div>
+      </div>
+    </div>
+    <div class="menu-select-wrap" style="margin-bottom:14px;">
+      <select class="rev-menu-sel" id="revSugMenuSelect" onchange="renderSuggestions()"></select>
+    </div>
+    <div id="revSuggestionsArea"></div>
+  </div>
+</div>
+
 <!-- Hidden clean print template -->
 <div id="printArea">
   <h1 id="printTitle">Grocery List</h1>
@@ -744,6 +1256,11 @@ select.menu-select{
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
     Menus
   </button>
+  <button class="navbtn" data-screen="reviews" onclick="goTo('reviews')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Reviews
+    <span class="navdot" id="reviewNavDot" style="display:none;"></span>
+  </button>
 </div>
 
 <!-- ============ MODAL: Confirm (in-app, no native dialogs) ============ -->
@@ -764,17 +1281,71 @@ select.menu-select{
   <div class="modal">
     <div class="modal-handle"></div>
     <h2 id="menuModalTitle">New Menu</h2>
-    <div class="modal-sub">Build a recipe card. Set a base headcount so quantities scale correctly.</div>
 
-    <div class="field-label">Menu Name</div>
+    <div class="field-label" style="margin-bottom:6px;">Menu Name</div>
     <input id="newMenuName" placeholder="e.g. Undhiyu">
 
-    <div class="field-label">Base Serves (people)</div>
+    <div class="field-label" style="margin-bottom:6px;">Base Serves (people)</div>
     <input id="newMenuBase" type="number" placeholder="100" value="100">
 
-    <div class="field-label">Ingredients</div>
-    <div id="newMenuIngredients"></div>
-    <button class="btn btn-ghost btn-sm" onclick="addIngredientRow()" style="margin-top:6px;">+ Add ingredient</button>
+    <!-- Mode tabs -->
+    <div class="menu-modal-tabs" style="margin-top:14px;">
+      <div class="mm-tab active" data-mmtab="manual" onclick="setMenuModalTab('manual')">✏️ Add one by one</div>
+      <div class="mm-tab" data-mmtab="paste" onclick="setMenuModalTab('paste')">📋 Paste / Import</div>
+    </div>
+
+    <!-- ── Manual tab ── -->
+    <div id="mmTabManual">
+      <div class="field-label" style="margin-bottom:6px;">Ingredients</div>
+      <div id="newMenuIngredients"></div>
+      <button class="btn btn-ghost btn-sm" onclick="addIngredientRow()" style="margin-top:6px;">+ Add ingredient</button>
+    </div>
+
+    <!-- ── Paste / Import tab ── -->
+    <div id="mmTabPaste" style="display:none;">
+
+      <!-- Source buttons -->
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <div class="paste-src-btn active" id="pasteSrcText" onclick="setPasteSrc('text')">📋 Paste text</div>
+        <div class="paste-src-btn" id="pasteSrcVoice" onclick="startPasteVoice()">🎤 Dictate</div>
+      </div>
+
+      <textarea class="paste-area" id="pasteInput" placeholder="Paste anything — WhatsApp message, notes, screenshot text, any language or format:
+
+Rice 25 lb
+Tomatoes 30
+Kothmir 3 bunches
+Paneer - 5 kg
+Ghee (as needed)
+25 Jalapeno
+બટાકા 3 bags
+
+Claude will extract the ingredients intelligently."></textarea>
+
+      <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
+        <button class="parse-ai-btn" id="parseAiBtn" onclick="parseWithAI()">
+          <span id="parseAiBtnIcon">✨</span> <span id="parseAiBtnLabel">Parse with Claude AI</span>
+        </button>
+      </div>
+
+      <!-- AI parse status -->
+      <div id="pasteAiStatus" style="display:none;margin-top:8px;">
+        <div class="paste-ai-status-row">
+          <div class="ai-spinner" style="width:14px;height:14px;border-width:2px;flex-shrink:0;"></div>
+          <span id="pasteAiStatusText">Reading your list…</span>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div id="pastePreview" style="display:none;margin-top:12px;">
+        <div class="paste-preview-header">
+          <span id="pastePreviewLabel"></span>
+          <button class="paste-clear-btn" onclick="clearPasteItems()">Clear all</button>
+        </div>
+        <div class="paste-preview" id="pastePreviewRows"></div>
+        <div id="pasteAiNote" style="display:none;" class="paste-ai-note"></div>
+      </div>
+    </div>
 
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeMenuModal()">Cancel</button>
@@ -1297,6 +1868,7 @@ const HEADER_CONFIG = {
   menus:  {eyebrow:'MENUS', title:'Manage Menus', sub:'<div class="sub">Add, edit, or remove recipe cards</div>'},
   duplicates: {eyebrow:'SMART TOOLS', title:'Possible Duplicates', sub:'<div class="sub">Items that may be the same thing, spelled differently</div>'},
   cost: {eyebrow:'COST MANAGEMENT', title:'Bills & Spend', sub:'<div class="sub">Log grocery bills after each sabha, see cost per menu</div>'},
+  reviews: {eyebrow:'REVIEWS', title:'Sabha Reviews', sub:'<div class="sub">Rate leftovers · get smart quantity suggestions</div>'},
 };
 function goTo(name){
   currentScreen = name;
@@ -1315,6 +1887,7 @@ function goTo(name){
   if(name==='menus') renderMenuManage();
   if(name==='duplicates') renderDuplicates();
   if(name==='cost'){ populateCostMenuSelect(); renderCost(); }
+  if(name==='reviews'){ populateRevMenuSelects(); renderRevStats(); if(revCurrentTab==='past') renderPastReviews(); if(revCurrentTab==='suggest') renderSuggestions(); }
   if(name==='live') { renderLiveAdminControls(); renderLiveScreen(); }
   window.scrollTo(0,0);
 }
@@ -2168,42 +2741,390 @@ function deleteMenu(name){
     showToast('Menu deleted');
   }, {title:'Delete Menu', okLabel:'Delete'});
 }
+/* ── Menu modal tab switcher ── */
+let menuModalTab = 'manual';
+let pasteItems = []; // parsed items from paste tab
+
+function setMenuModalTab(tab){
+  menuModalTab = tab;
+  document.querySelectorAll('[data-mmtab]').forEach(el=>el.classList.toggle('active', el.dataset.mmtab===tab));
+  document.getElementById('mmTabManual').style.display = tab==='manual'?'block':'none';
+  document.getElementById('mmTabPaste').style.display = tab==='paste'?'block':'none';
+}
+
 function openNewMenuModal(){
   document.getElementById('menuModalTitle').textContent='New Menu';
   document.getElementById('newMenuName').value='';
   document.getElementById('newMenuBase').value='100';
   document.getElementById('newMenuIngredients').innerHTML='';
+  document.getElementById('pasteInput') && (document.getElementById('pasteInput').value='');
+  document.getElementById('pastePreview') && (document.getElementById('pastePreview').style.display='none');
+  pasteItems=[];
+  menuModalTab='manual';
+  setMenuModalTab('manual');
   addIngredientRow(); addIngredientRow(); addIngredientRow();
   document.getElementById('menuModalOverlay').classList.add('show');
 }
-function closeMenuModal(){ document.getElementById('menuModalOverlay').classList.remove('show'); }
+function closeMenuModal(){
+  document.getElementById('menuModalOverlay').classList.remove('show');
+  closeAllAcDropdowns();
+}
+
+/* ── Build a unique sorted list of all known ingredient names ── */
+function getAllKnownIngredients(){
+  const seen = new Map(); // normName -> {name, units:[]}
+  Object.values(MENUS).forEach(m=>{
+    (m.items||[]).forEach(it=>{
+      if(it.section||it.isNote||!it.name) return;
+      const k = normName(it.name);
+      if(!seen.has(k)) seen.set(k,{name:it.name, units:[]});
+      if(it.unit && !seen.get(k).units.includes(it.unit)) seen.get(k).units.push(it.unit);
+    });
+  });
+  return [...seen.values()].sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+/* ── Autocomplete ── */
+let acFocusIndex = -1;
+let acActiveInput = null;
+
+function closeAllAcDropdowns(){
+  document.querySelectorAll('.ac-dropdown').forEach(d=>d.remove());
+  acFocusIndex=-1; acActiveInput=null;
+}
+
+function onNiNameInput(input){
+  acActiveInput = input;
+  const q = input.value.trim().toLowerCase();
+  closeAllAcDropdowns();
+  if(q.length<1) return;
+
+  const all = getAllKnownIngredients();
+  const matches = all.filter(i=>{
+    const n = i.name.toLowerCase();
+    return n.includes(q) || normName(i.name).includes(normName(q));
+  }).slice(0,8);
+  if(!matches.length) return;
+
+  const dropdown = document.createElement('div');
+  dropdown.className='ac-dropdown';
+  acFocusIndex=-1;
+
+  matches.forEach((item,idx)=>{
+    const div = document.createElement('div');
+    div.className='ac-item';
+    const emoji = autoEmojiForDivision(item.name,'raw');
+    const unitHint = item.units.length ? item.units.slice(0,2).join(' / ') : '';
+    div.innerHTML=`<span>${emoji}</span><span class="ac-item-name">${item.name}</span>${unitHint?`<span class="ac-item-meta">${unitHint}</span>`:''}`;
+    div.addEventListener('mousedown', e=>{
+      e.preventDefault();
+      selectAcItem(input, item);
+    });
+    dropdown.appendChild(div);
+  });
+
+  // Position inside .ac-wrap
+  const wrap = input.closest('.ac-wrap') || input.parentElement;
+  wrap.style.position='relative';
+  wrap.appendChild(dropdown);
+
+  // keyboard nav on the input
+  input._acDropdown = dropdown;
+}
+
+function selectAcItem(input, item){
+  input.value = item.name;
+  closeAllAcDropdowns();
+  // Auto-fill unit if there's one canonical unit
+  const row = input.closest('.dyn-row');
+  if(row && item.units.length===1){
+    const unitInput = row.querySelector('.ni-unit');
+    if(unitInput && !unitInput.value) unitInput.value = item.units[0];
+  }
+  input.focus();
+}
+
+function onNiNameKeydown(e, input){
+  const dropdown = input._acDropdown;
+  if(!dropdown) return;
+  const items = dropdown.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){
+    e.preventDefault();
+    acFocusIndex=Math.min(acFocusIndex+1,items.length-1);
+    items.forEach((el,i)=>el.classList.toggle('focused',i===acFocusIndex));
+  } else if(e.key==='ArrowUp'){
+    e.preventDefault();
+    acFocusIndex=Math.max(acFocusIndex-1,0);
+    items.forEach((el,i)=>el.classList.toggle('focused',i===acFocusIndex));
+  } else if(e.key==='Enter'||e.key==='Tab'){
+    if(acFocusIndex>=0 && items[acFocusIndex]){
+      e.preventDefault();
+      items[acFocusIndex].dispatchEvent(new MouseEvent('mousedown'));
+    } else {
+      closeAllAcDropdowns();
+    }
+  } else if(e.key==='Escape'){
+    closeAllAcDropdowns();
+  }
+}
+
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.ac-wrap') && !e.target.closest('.ac-dropdown')) closeAllAcDropdowns();
+});
+
+/* ── Add ingredient row (now with autocomplete) ── */
 function addIngredientRow(name='', qty='', unit=''){
   const wrap = document.getElementById('newMenuIngredients');
   const row = document.createElement('div');
   row.className='dyn-row';
-  row.innerHTML = `
-    <input class="ni-name" placeholder="Ingredient" value="${name}" style="flex:1.6;">
+  // Use ac-wrap for the name input so dropdown positions correctly
+  row.innerHTML=`
+    <div class="ac-wrap" style="flex:1.6;min-width:0;">
+      <input class="ni-name" placeholder="Ingredient" value="${name}"
+        oninput="onNiNameInput(this)"
+        onkeydown="onNiNameKeydown(event,this)"
+        onblur="setTimeout(closeAllAcDropdowns,150)">
+    </div>
     <input class="ni-qty" placeholder="Qty" value="${qty}" style="flex:0.7;">
     <input class="ni-unit" placeholder="Unit" value="${unit}" style="flex:0.9;">
     <button class="rm" onclick="this.parentElement.remove()">×</button>
   `;
   wrap.appendChild(row);
 }
+
+/* ── Paste / import parser ── */
+/* ── AI-powered paste parser ── */
+let pasteVoiceRec = null;
+
+function setPasteSrc(src){
+  document.getElementById('pasteSrcText').classList.toggle('active', src==='text');
+  document.getElementById('pasteSrcVoice').classList.toggle('active', src==='voice');
+}
+
+function startPasteVoice(){
+  const SpeechCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechCtor){ showToast('Voice not supported in this browser', true); return; }
+  if(pasteVoiceRec){ pasteVoiceRec.stop(); pasteVoiceRec=null; setPasteSrc('text'); return; }
+  setPasteSrc('voice');
+  pasteVoiceRec = new SpeechCtor();
+  pasteVoiceRec.lang='en-US';
+  pasteVoiceRec.continuous=true;
+  pasteVoiceRec.interimResults=true;
+  const ta = document.getElementById('pasteInput');
+  pasteVoiceRec.onresult=e=>{
+    let interim='', final='';
+    for(const r of e.results){ if(r.isFinal) final+=r[0].transcript+'\n'; else interim+=r[0].transcript; }
+    ta.value = (ta.value||'') + final;
+  };
+  pasteVoiceRec.onerror=()=>{ showToast("Voice error — try again", true); setPasteSrc('text'); pasteVoiceRec=null; };
+  pasteVoiceRec.onend=()=>{ setPasteSrc('text'); pasteVoiceRec=null; };
+  try{ pasteVoiceRec.start(); showToast('🎤 Listening — say your ingredients'); }
+  catch(e){ showToast("Couldn't start voice", true); setPasteSrc('text'); pasteVoiceRec=null; }
+}
+
+function clearPasteItems(){
+  pasteItems=[];
+  document.getElementById('pasteInput').value='';
+  document.getElementById('pastePreview').style.display='none';
+  document.getElementById('pasteAiStatus').style.display='none';
+}
+
+async function parseWithAI(){
+  const raw = (document.getElementById('pasteInput')?.value||'').trim();
+  if(!raw){ showToast('Paste something first'); return; }
+
+  // Show loading state
+  const btn = document.getElementById('parseAiBtn');
+  const statusDiv = document.getElementById('pasteAiStatus');
+  const statusText = document.getElementById('pasteAiStatusText');
+  btn.disabled=true;
+  document.getElementById('parseAiBtnIcon').textContent='⏳';
+  document.getElementById('parseAiBtnLabel').textContent='Parsing…';
+  statusDiv.style.display='block';
+
+  const statusMsgs = [
+    'Reading your list…',
+    'Identifying ingredients…',
+    'Extracting quantities…',
+    'Almost done…'
+  ];
+  let msgIdx=0;
+  statusText.textContent=statusMsgs[0];
+  const statusInterval=setInterval(()=>{
+    msgIdx=(msgIdx+1)%statusMsgs.length;
+    statusText.textContent=statusMsgs[msgIdx];
+  }, 1800);
+
+  // Build known ingredient names as context
+  const knownNames = getAllKnownIngredients().slice(0,40).map(i=>i.name).join(', ');
+
+  const prompt = `You are a kitchen assistant for a Swaminarayan sabha (community vegetarian meal). 
+Extract a structured ingredient list from the text below.
+
+Known ingredients in this app (for reference/normalisation): ${knownNames}
+
+Rules:
+- Return ONLY valid JSON, no markdown, no explanation
+- Format: {"items": [{"name": "...", "qty": number_or_null, "unit": "...or empty string"}, ...], "note": "optional short note about anything unusual or unclear"}
+- Normalise names to English (e.g. "બટાકા" → "Potatoes", "Kothmir" stays as "Kothmir")  
+- If a qty is "as needed" / "to taste" / unclear, set qty to null and unit to "as needed"
+- Separate compound entries if needed (e.g. "salt & pepper" → two items)
+- Ignore section headers, instructions, or non-ingredient lines
+- Keep original ingredient names where they're already recognisable sabha terms (Mamra, Sev, Dahi, etc.)
+
+Text to parse:
+${raw}`;
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        messages:[{role:'user', content:prompt}]
+      })
+    });
+    const data = await res.json();
+    clearInterval(statusInterval);
+
+    if(data.error){
+      statusDiv.style.display='none';
+      btn.disabled=false;
+      document.getElementById('parseAiBtnIcon').textContent='✨';
+      document.getElementById('parseAiBtnLabel').textContent='Parse with Claude AI';
+      showToast('AI error: '+data.error.message, true);
+      return;
+    }
+
+    const rawText = (data.content||[]).map(b=>b.text||'').join('').trim();
+    // Strip markdown fences if present
+    const jsonStr = rawText.replace(/^```json\s*/i,'').replace(/^```\s*/,'').replace(/```\s*$/,'').trim();
+    const parsed = JSON.parse(jsonStr);
+
+    pasteItems = (parsed.items||[]).filter(i=>i.name).map(i=>({
+      name: String(i.name).trim(),
+      qty: (i.qty !== null && i.qty !== undefined && !isNaN(parseFloat(i.qty))) ? parseFloat(i.qty) : null,
+      unit: String(i.unit||'').trim()
+    }));
+
+    // Show AI note if present
+    const noteEl = document.getElementById('pasteAiNote');
+    if(parsed.note && parsed.note.trim()){
+      noteEl.style.display='block';
+      noteEl.textContent='✨ ' + parsed.note;
+    } else {
+      noteEl.style.display='none';
+    }
+
+    statusDiv.style.display='none';
+    btn.disabled=false;
+    document.getElementById('parseAiBtnIcon').textContent='✓';
+    document.getElementById('parseAiBtnLabel').textContent='Parsed — edit below';
+    renderPastePreview();
+    showToast('✓ Claude parsed '+pasteItems.length+' ingredients');
+
+  }catch(e){
+    clearInterval(statusInterval);
+    statusDiv.style.display='none';
+    btn.disabled=false;
+    document.getElementById('parseAiBtnIcon').textContent='✨';
+    document.getElementById('parseAiBtnLabel').textContent='Parse with Claude AI';
+    // Fallback to local regex
+    parsePasteInputLocal();
+    showToast('AI unavailable — used local parser', true);
+  }
+}
+
+/* ── Local regex fallback (kept for offline) ── */
+function parsePasteInputLocal(){
+  const raw = (document.getElementById('pasteInput')?.value||'').trim();
+  pasteItems=[];
+  if(!raw){ document.getElementById('pastePreview').style.display='none'; return; }
+  const lines = raw.split(/\n/).map(l=>l.trim()).filter(l=>l.length>0);
+  lines.forEach(line=>{
+    let clean = line.replace(/^[•\-\*\d\.]+\s*/, '').trim();
+    if(!clean) return;
+    const numMatch = clean.match(/^(.*?)\b([\d\/\.]+)\s*([a-zA-Z%]*)(.*)$/);
+    let itemName='', qty=null, unit='';
+    if(numMatch){
+      const before = numMatch[1].trim().replace(/[-:(]+$/, '').trim();
+      const after  = numMatch[4].trim().replace(/^[)]+/, '').trim();
+      const num    = parseFloat(numMatch[2]) || null;
+      const rawUnit = numMatch[3].trim();
+      itemName = before.length >= after.length ? (before||after) : (after||before);
+      qty=num; unit=rawUnit;
+    } else { itemName=clean; }
+    itemName = itemName.replace(/[,;:]+$/, '').trim();
+    if(!itemName) return;
+    pasteItems.push({name:itemName, qty, unit});
+  });
+  renderPastePreview();
+}
+
+/* keep old name as alias so nothing breaks */
+function parsePasteInput(){ /* no-op — user now taps Parse button */ }
+
+function renderPastePreview(){
+  const wrap = document.getElementById('pastePreview');
+  const rowsWrap = document.getElementById('pastePreviewRows');
+  const label = document.getElementById('pastePreviewLabel');
+  if(!pasteItems.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  label.textContent = pasteItems.length+' ingredient'+(pasteItems.length>1?'s':'')+' · tap to edit';
+  rowsWrap.innerHTML = pasteItems.map((it,i)=>{
+    const emoji = autoEmojiForDivision(it.name,'raw');
+    const qtyStr = it.qty!=null ? (it.qty+(it.unit?' '+it.unit:'')) : (it.unit||'');
+    return `<div class="paste-preview-row">
+      <span style="font-size:16px;flex-shrink:0;">${emoji}</span>
+      <input class="pp-name-input" value="${it.name.replace(/"/g,'&quot;')}"
+        onchange="pasteItems[${i}].name=this.value;this.previousSibling.textContent=autoEmojiForDivision(this.value,'raw');"
+        placeholder="Ingredient name">
+      <input class="pp-qty-input" value="${qtyStr}"
+        onchange="updatePasteQtyUnit(${i},this.value)"
+        placeholder="qty">
+      <button class="pp-remove" onclick="removePasteItem(${i})">×</button>
+    </div>`;
+  }).join('');
+}
+
+function updatePasteQtyUnit(i, val){
+  val=val.trim();
+  const m=val.match(/^([\d.]+)\s*(.*)$/);
+  if(m){ pasteItems[i].qty=parseFloat(m[1]); pasteItems[i].unit=m[2].trim(); }
+  else { pasteItems[i].qty=null; pasteItems[i].unit=val; }
+}
+
+function removePasteItem(i){
+  pasteItems.splice(i,1);
+  renderPastePreview();
+}
 function saveMenu(){
   const name = document.getElementById('newMenuName').value.trim();
   const base = parseInt(document.getElementById('newMenuBase').value)||100;
   if(!name){ showToast('Enter a menu name'); return; }
-  const rows = document.querySelectorAll('#newMenuIngredients .dyn-row');
-  const items=[];
-  rows.forEach(r=>{
-    const n = r.querySelector('.ni-name').value.trim();
-    const q = r.querySelector('.ni-qty').value.trim();
-    const u = r.querySelector('.ni-unit').value.trim();
-    if(!n) return;
-    const num = parseFloat(q);
-    const isNum = q!=='' && !isNaN(num) && /^[\d.]+$/.test(q);
-    items.push(isNum ? ing(n, num, u) : ing(n, q||null, u));
-  });
+
+  let items=[];
+
+  if(menuModalTab==='paste'){
+    if(pasteItems.length===0){ showToast('Paste a list first'); return; }
+    items = pasteItems.map(it=>{
+      const isNum = it.qty!==null && !isNaN(it.qty);
+      return isNum ? ing(it.name, it.qty, it.unit||'') : ing(it.name, it.unit||null, '');
+    });
+  } else {
+    const rows = document.querySelectorAll('#newMenuIngredients .dyn-row');
+    rows.forEach(r=>{
+      const n = r.querySelector('.ni-name').value.trim();
+      const q = r.querySelector('.ni-qty').value.trim();
+      const u = r.querySelector('.ni-unit').value.trim();
+      if(!n) return;
+      const num = parseFloat(q);
+      const isNum = q!=='' && !isNaN(num) && /^[\d.]+$/.test(q);
+      items.push(isNum ? ing(n, num, u) : ing(n, q||null, u));
+    });
+  }
+
   if(items.length===0){ showToast('Add at least one ingredient'); return; }
   MENUS[name] = {base, items};
   currentMenu = name;
@@ -2213,7 +3134,7 @@ function saveMenu(){
   saveLocal();
   onMenuChange();
   renderMenuManage();
-  showToast('Menu "'+name+'" created');
+  showToast('Menu "'+name+'" created — '+items.length+' items');
 }
 
 /* ============================================================
@@ -2368,18 +3289,24 @@ function publishLive(){
   goTo('live');
   renderLiveScreen();
 }
+async function endLiveConfirmed(){
+  LIVE.active = false;
+  LIVE.updatedAt = Date.now();
+  renderLiveScreen();
+  renderHome();
+  showToast('Live sabha ended');
+  if(fbReady){
+    try{ await fbRef.update({active:false, updatedAt: LIVE.updatedAt}); }
+    catch(e){ showToast("Ended here — sync failed, check connection", true); }
+  }
+}
+
 function endLive(){
   showConfirm('End the live sabha for everyone?', async ()=>{
-    LIVE.active = false;
-    LIVE.updatedAt = Date.now();
-    renderLiveScreen();
-    renderHome();
-    showToast('Live sabha ended');
-    if(fbReady){
-      try{ await fbRef.update({active:false, updatedAt: LIVE.updatedAt}); }
-      catch(e){ showToast("Ended here — sync failed, check connection", true); }
-    }
-  }, {title:'End Live Sabha', okLabel:'End It'});
+    await endLiveConfirmed();
+    // Short delay so the confirm modal closes cleanly, then open review sheet
+    setTimeout(()=> openPostSabhaReview(LIVE.menuName, LIVE.people, LIVE.items), 350);
+  }, {title:'End Live Sabha', okLabel:'End It ✓'});
 }
 function liveItemKey(idx){ return 'live::'+idx; }
 
@@ -2491,6 +3418,552 @@ function renderLiveList(){
   }
 }
 
+
+/* ============================================================
+   REVIEWS SYSTEM
+   Firebase path: reviews/<pushId>
+   Shape: { menuName, headcount, date, starRating, notes,
+             itemLeftovers:{itemName: 0-10}, savedAt }
+   ============================================================ */
+
+let REVIEWS = [];          // local cache, synced from Firebase
+let revCurrentStar = 0;
+let revCurrentTab = 'submit';
+let revFilterMenu = 'all';
+let fbReviewsRef = null;
+
+/* ── Firebase init for reviews (called after initFirebase) ── */
+function initReviewsFirebase(){
+  if(!fbReady) return;
+  try{
+    fbReviewsRef = firebase.database().ref('sabha_reviews');
+    fbReviewsRef.on('value', (snap)=>{
+      const val = snap.val() || {};
+      REVIEWS = Object.entries(val).map(([id, r])=>({...r, _fbId: id}))
+        .sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
+      if(currentScreen==='reviews'){
+        renderRevStats();
+        if(revCurrentTab==='past') renderPastReviews();
+        if(revCurrentTab==='suggest') renderSuggestions();
+      }
+      updateHomeReviewTeaser();
+    }, err=>{
+      console.error('Reviews sync error', err);
+    });
+  }catch(e){
+    console.error('Reviews Firebase init failed', e);
+  }
+}
+
+function updateHomeReviewTeaser(){
+  const el = document.getElementById('homeReviewTeaser');
+  if(!el) return;
+  if(REVIEWS.length===0){
+    el.textContent = 'Rate leftovers after each sabha · AI suggests next quantities';
+  } else {
+    const avg = REVIEWS.filter(r=>r.starRating).reduce((s,r)=>s+r.starRating,0) /
+                Math.max(1, REVIEWS.filter(r=>r.starRating).length);
+    el.textContent = REVIEWS.length + ' reviews · avg ' + avg.toFixed(1) + ' ★ · tap for AI suggestions';
+  }
+}
+
+/* ── Tab switching ── */
+function setRevTab(tab){
+  revCurrentTab = tab;
+  ['submit','past','suggest'].forEach(t=>{
+    document.getElementById('revTab'+t.charAt(0).toUpperCase()+t.slice(1)).style.display = t===tab?'block':'none';
+    document.querySelectorAll('[data-rtab]').forEach(el=>el.classList.toggle('active', el.dataset.rtab===tab));
+  });
+  if(tab==='past') renderPastReviews();
+  if(tab==='suggest') renderSuggestions();
+}
+
+/* ── Populate menu selectors ── */
+function populateRevMenuSelects(){
+  const names = Object.keys(MENUS);
+  ['revMenuSelect','revSugMenuSelect'].forEach(id=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = names.map(n=>`<option value="${n}">${n}</option>`).join('');
+    if(cur && names.includes(cur)) sel.value = cur;
+  });
+  renderRevItemSliders();
+}
+
+/* ── Item sliders for the submit form ── */
+function renderRevItemSliders(){
+  const menuName = document.getElementById('revMenuSelect')?.value;
+  if(!menuName || !MENUS[menuName]) return;
+  const items = (MENUS[menuName].items||[]).filter(i=>!i.section && !i.isNote && i.name);
+  const wrap = document.getElementById('revItemSliders');
+  if(!wrap) return;
+
+  // Try to prefill with last review's values
+  const lastForMenu = REVIEWS.find(r=>r.menuName===menuName);
+  const lastLO = lastForMenu?.itemLeftovers || {};
+
+  wrap.innerHTML = items.map((it,i)=>{
+    const prev = lastLO[it.name] ?? 5;
+    const emoji = autoEmojiForDivision(it.name,'raw');
+    return `
+      <div class="rev-item-row">
+        <div class="rev-item-name">${emoji} ${it.name}</div>
+        <div class="rev-slider-wrap">
+          <div class="rev-slider-label">None left</div>
+          <input class="rev-slider" type="range" min="0" max="10" value="${prev}"
+            id="revSlider_${i}" oninput="document.getElementById('revSliderVal_${i}').textContent=this.value;updateSliderColor(this)">
+          <div class="rev-slider-val" id="revSliderVal_${i}">${prev}</div>
+          <div class="rev-slider-label" style="text-align:right;">Lots left</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Set initial colors
+  items.forEach((_,i)=>{
+    const s = document.getElementById('revSlider_'+i);
+    if(s) updateSliderColor(s);
+  });
+}
+
+function updateSliderColor(slider){
+  const v = parseInt(slider.value);
+  // 0=green(gone), 5=gold(ok), 10=red(too much left)
+  if(v <= 2) slider.style.accentColor = '#7FD97F';
+  else if(v <= 5) slider.style.accentColor = '#F0B83D';
+  else slider.style.accentColor = '#E0584B';
+}
+
+/* ── Star rating ── */
+function setRevStar(n){
+  revCurrentStar = n;
+  document.querySelectorAll('.rev-star').forEach(s=>{
+    s.classList.toggle('on', parseInt(s.dataset.v)<=n);
+  });
+}
+
+/* ── Submit review ── */
+async function submitReview(){
+  const menuName = document.getElementById('revMenuSelect')?.value;
+  if(!menuName){ showToast('Pick a menu'); return; }
+  if(!revCurrentStar){ showToast('Give a star rating'); return; }
+
+  const headcountRaw = document.getElementById('revHeadcount').value.trim();
+  const headcount = parseInt(headcountRaw) || null;
+  const notes = document.getElementById('revNotes')?.value.trim() || '';
+
+  // Collect item leftover values
+  const items = (MENUS[menuName].items||[]).filter(i=>!i.section && !i.isNote && i.name);
+  const itemLeftovers = {};
+  items.forEach((it,i)=>{
+    const s = document.getElementById('revSlider_'+i);
+    if(s) itemLeftovers[it.name] = parseInt(s.value);
+  });
+
+  const review = {
+    menuName,
+    headcount,
+    date: new Date().toISOString().slice(0,10),
+    starRating: revCurrentStar,
+    notes,
+    itemLeftovers,
+    savedAt: Date.now()
+  };
+
+  if(fbReady && fbReviewsRef){
+    try{
+      await fbReviewsRef.push(review);
+      showToast('✓ Review saved to cloud');
+    }catch(e){
+      // fallback local
+      review._fbId = 'local_'+Date.now();
+      REVIEWS.unshift(review);
+      showToast('Saved locally (sync error)', true);
+    }
+  } else {
+    review._fbId = 'local_'+Date.now();
+    REVIEWS.unshift(review);
+    showToast('Saved locally — no cloud sync yet');
+  }
+
+  // Reset form
+  revCurrentStar = 0;
+  document.querySelectorAll('.rev-star').forEach(s=>s.classList.remove('on'));
+  document.getElementById('revNotes').value = '';
+  document.getElementById('revHeadcount').value = '';
+  renderRevStats();
+  updateHomeReviewTeaser();
+}
+
+/* ── Stats bar ── */
+function renderRevStats(){
+  const count = REVIEWS.length;
+  const withStars = REVIEWS.filter(r=>r.starRating);
+  const avg = withStars.length ? (withStars.reduce((s,r)=>s+r.starRating,0)/withStars.length).toFixed(1) : '—';
+  const menus = new Set(REVIEWS.map(r=>r.menuName)).size;
+  document.getElementById('revStatCount').textContent = count;
+  document.getElementById('revStatRating').textContent = avg;
+  document.getElementById('revStatMenus').textContent = menus;
+}
+
+/* ── Past Reviews ── */
+function setRevFilter(menu){
+  revFilterMenu = menu;
+  document.querySelectorAll('[data-rmenu]').forEach(el=>el.classList.toggle('active', el.dataset.rmenu===menu));
+  renderPastReviews();
+}
+
+function renderPastReviews(){
+  // Build filter chips
+  const filterRow = document.getElementById('revFilterRow');
+  const menusSeen = [...new Set(REVIEWS.map(r=>r.menuName))].sort();
+  filterRow.innerHTML = `<div class="rev-filter-chip ${revFilterMenu==='all'?'active':''}" data-rmenu="all" onclick="setRevFilter('all')">All Menus</div>`
+    + menusSeen.map(m=>`<div class="rev-filter-chip ${revFilterMenu===m?'active':''}" data-rmenu="${m}" onclick="setRevFilter('${m.replace(/'/g,"\'")}')">  ${m}</div>`).join('');
+
+  const filtered = revFilterMenu==='all' ? REVIEWS : REVIEWS.filter(r=>r.menuName===revFilterMenu);
+  const wrap = document.getElementById('revPastList');
+
+  if(filtered.length===0){
+    wrap.innerHTML = `<div class="rev-empty"><div class="eicon">📋</div><p>No reviews yet.</p><p>Submit your first review above.</p></div>`;
+    return;
+  }
+
+  wrap.innerHTML = filtered.map(r=>{
+    const stars = '★'.repeat(r.starRating||0) + '☆'.repeat(5-(r.starRating||0));
+    const lo = r.itemLeftovers || {};
+    const loEntries = Object.entries(lo);
+    const loHtml = loEntries.length ? `
+      <div class="rev-leftover-grid">
+        ${loEntries.map(([name, val])=>{
+          const pct = val*10;
+          const color = val<=2 ? '#7FD97F' : val<=5 ? '#F0B83D' : '#E0584B';
+          const emoji = autoEmojiForDivision(name,'raw');
+          return `<div class="rev-lo-pill">
+            <div class="rev-lo-name">${emoji} ${name}</div>
+            <div class="rev-lo-bar-wrap">
+              <div class="rev-lo-bar-track"><div class="rev-lo-bar-fill" style="width:${pct}%;background:${color};"></div></div>
+              <div class="rev-lo-pct" style="color:${color};">${val}/10</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>` : '';
+    const notesHtml = r.notes ? `<div class="rev-notes-display">"${r.notes}"</div>` : '';
+    const hcHtml = r.headcount ? `· ${r.headcount} people` : '';
+    return `
+      <div class="rev-card">
+        <div class="rev-card-header">
+          <div>
+            <div class="rev-card-menu">${r.menuName}</div>
+            <div class="rev-card-meta">${r.date}${hcHtml}</div>
+          </div>
+          <div class="rev-card-star-wrap">
+            <div class="rev-card-stars" style="color:var(--gold);">${stars}</div>
+          </div>
+        </div>
+        ${loHtml}
+        ${notesHtml}
+      </div>`;
+  }).join('');
+}
+
+/* ── Smart Suggestions (pattern-based, no API call needed) ── */
+function renderSuggestions(){
+  const menuName = document.getElementById('revSugMenuSelect')?.value;
+  const wrap = document.getElementById('revSuggestionsArea');
+  if(!wrap) return;
+
+  const forMenu = REVIEWS.filter(r=>r.menuName===menuName);
+  if(forMenu.length===0){
+    wrap.innerHTML = `<div class="rev-empty"><div class="eicon">✨</div><p>No reviews for this menu yet.</p><p>After your next ${menuName} sabha, submit a review to start seeing suggestions.</p></div>`;
+    return;
+  }
+
+  // Collect all item names across all reviews of this menu
+  const allItems = new Set();
+  forMenu.forEach(r=>Object.keys(r.itemLeftovers||{}).forEach(k=>allItems.add(k)));
+
+  // For each item, calculate average leftover and trend
+  const suggestions = [];
+  allItems.forEach(itemName=>{
+    const vals = forMenu
+      .filter(r=>r.itemLeftovers&&r.itemLeftovers[itemName]!==undefined)
+      .map(r=>r.itemLeftovers[itemName]);
+    if(vals.length===0) return;
+    const avg = vals.reduce((s,v)=>s+v,0)/vals.length;
+    const latest = vals[0]; // most recent first
+    let suggestion, label, cls;
+    if(avg >= 7){
+      suggestion = 'Reduce by ~20–30%';
+      label = '↓ Reduce';
+      cls = 'reduce';
+    } else if(avg >= 5){
+      suggestion = 'Slight reduction (~10%)';
+      label = '↓ Trim';
+      cls = 'reduce';
+    } else if(avg <= 1){
+      suggestion = 'Increase by ~20–30%';
+      label = '↑ More';
+      cls = 'increase';
+    } else if(avg <= 2){
+      suggestion = 'Slight increase (~10%)';
+      label = '↑ Add';
+      cls = 'increase';
+    } else {
+      suggestion = 'Quantity looks right';
+      label = '✓ Good';
+      cls = 'ok';
+    }
+    suggestions.push({itemName, avg, vals, suggestion, label, cls});
+  });
+
+  // Sort: most actionable first (reduce first, then increase, then ok)
+  suggestions.sort((a,b)=>{
+    const order = {reduce:0,increase:1,ok:2};
+    const ca = order[a.cls]??3, cb = order[b.cls]??3;
+    if(ca!==cb) return ca-cb;
+    return Math.abs(b.avg-5) - Math.abs(a.avg-5);
+  });
+
+  const reviewCount = forMenu.length;
+  const hcAvg = forMenu.filter(r=>r.headcount).reduce((s,r,_,a)=>s+r.headcount/a.length,0);
+  const hcNote = hcAvg>0 ? ` (avg ${Math.round(hcAvg)} people)` : '';
+
+  const needsReduce = suggestions.filter(s=>s.cls==='reduce');
+  const needsMore = suggestions.filter(s=>s.cls==='increase');
+  const lookGood = suggestions.filter(s=>s.cls==='ok');
+
+  let html = `
+    <div class="card" style="background:var(--card-raised);margin-bottom:14px;">
+      <div style="font-size:12.5px;color:var(--lilac-dim);line-height:1.5;">
+        Based on <b style="color:var(--cream);">${reviewCount} review${reviewCount>1?'s':''}</b> of ${menuName}${hcNote}.
+        Suggestions assume similar headcount next time.
+      </div>
+    </div>`;
+
+  function sectionHtml(title, icon, items){
+    if(!items.length) return '';
+    return `
+      <div class="rev-suggestion-card" style="margin-bottom:10px;">
+        <div class="rev-suggestion-header">
+          <div class="rev-suggestion-icon">${icon}</div>
+          <div>
+            <div class="rev-suggestion-title">${title}</div>
+            <div class="rev-suggestion-sub">${items.length} item${items.length>1?'s':''}</div>
+          </div>
+        </div>
+        <div class="rev-suggestion-items">
+          ${items.map(s=>{
+            const avgDisp = s.avg.toFixed(1);
+            return `<div class="rev-sug-item">
+              <div>
+                <div class="rev-sug-item-name">${autoEmojiForDivision(s.itemName,'raw')} ${s.itemName}</div>
+                <div style="font-size:11px;color:var(--lilac-dim);margin-top:2px;">avg leftover: ${avgDisp}/10 over ${s.vals.length} review${s.vals.length>1?'s':''}</div>
+              </div>
+              <div class="rev-sug-change ${s.cls}">${s.label}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
+
+  html += sectionHtml('Make Less — Too Much Left', '📉', needsReduce);
+  html += sectionHtml('Make More — Running Short', '📈', needsMore);
+  html += sectionHtml('Spot On — Keep the Same', '✅', lookGood);
+
+  wrap.innerHTML = html;
+}
+
+/* ── Wire up menu select on change ── */
+document.addEventListener('DOMContentLoaded', ()=>{
+  const sel = document.getElementById('revMenuSelect');
+  if(sel) sel.addEventListener('change', renderRevItemSliders);
+});
+
+
+/* ============================================================
+   POST-SABHA REVIEW SHEET
+   ============================================================ */
+let psCurrentStar = 0;
+let psMenuName = null;
+let psHeadcount = null;
+let psItems = [];
+let psReviewSaved = false;
+
+function openPostSabhaReview(menuName, headcount, items){
+  psMenuName = menuName;
+  psHeadcount = headcount;
+  psItems = (items||[]).filter(i=>!i.section && !i.isNote && i.name);
+  psCurrentStar = 0;
+  psReviewSaved = false;
+
+  // Header
+  document.getElementById('psSabhaTitle').textContent = menuName || 'Sabha';
+  document.getElementById('psSabhaSub').textContent =
+    (headcount ? `${headcount} people · ` : '') + new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+
+  // Reset stars
+  document.querySelectorAll('.ps-star').forEach(s=>s.classList.remove('on'));
+
+  // Build item sliders
+  const wrap = document.getElementById('psItemSliders');
+  const lastReview = REVIEWS.find(r=>r.menuName===menuName);
+  const lastLO = lastReview?.itemLeftovers || {};
+  wrap.innerHTML = psItems.map((it,i)=>{
+    const prev = lastLO[it.name] ?? 5;
+    const emoji = autoEmojiForDivision(it.name,'raw');
+    return `
+      <div class="ps-item-card">
+        <div class="ps-item-name"><span>${emoji}</span>${it.name}</div>
+        <div class="ps-slider-row">
+          <div class="ps-slider-end">All gone</div>
+          <input class="ps-slider" type="range" min="0" max="10" value="${prev}"
+            id="psSlider_${i}"
+            oninput="document.getElementById('psSliderVal_${i}').textContent=this.value;updatePsSliderColor(this)">
+          <div class="ps-slider-val" id="psSliderVal_${i}">${prev}</div>
+          <div class="ps-slider-end right">Lots left</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Set initial colors
+  psItems.forEach((_,i)=>{
+    const s = document.getElementById('psSlider_'+i);
+    if(s) updatePsSliderColor(s);
+  });
+
+  // Reset
+  document.getElementById('psNotes').value='';
+  document.getElementById('psAiSection').style.display='none';
+  document.getElementById('psSaveBtn').style.display='';
+  document.querySelector('.ps-skip-btn').style.display='';
+
+  // Show sheet
+  document.getElementById('postSabhaOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+
+function closePostSabha(){
+  document.getElementById('postSabhaOverlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+function setPsStar(n){
+  psCurrentStar=n;
+  document.querySelectorAll('.ps-star').forEach(s=>s.classList.toggle('on',parseInt(s.dataset.v)<=n));
+}
+
+function updatePsSliderColor(slider){
+  const v=parseInt(slider.value);
+  if(v<=2) slider.style.accentColor='#7FD97F';
+  else if(v<=5) slider.style.accentColor='#F0B83D';
+  else slider.style.accentColor='#E0584B';
+}
+
+async function savePostSabhaReview(){
+  if(!psCurrentStar){ showToast('Tap a star rating first'); return; }
+
+  // Collect sliders
+  const itemLeftovers={};
+  psItems.forEach((it,i)=>{
+    const s=document.getElementById('psSlider_'+i);
+    if(s) itemLeftovers[it.name]=parseInt(s.value);
+  });
+  const notes=document.getElementById('psNotes').value.trim();
+
+  const review={
+    menuName: psMenuName,
+    headcount: psHeadcount,
+    date: new Date().toISOString().slice(0,10),
+    starRating: psCurrentStar,
+    notes,
+    itemLeftovers,
+    savedAt: Date.now()
+  };
+
+  // Save to Firebase
+  let saved=false;
+  if(fbReady && fbReviewsRef){
+    try{ await fbReviewsRef.push(review); saved=true; }
+    catch(e){}
+  }
+  if(!saved){
+    review._fbId='local_'+Date.now();
+    REVIEWS.unshift(review);
+  }
+  psReviewSaved=true;
+
+  // Hide save button, show AI section
+  document.getElementById('psSaveBtn').style.display='none';
+  document.querySelector('.ps-skip-btn').textContent='Done';
+  document.getElementById('psAiSection').style.display='block';
+  document.getElementById('psAiBody').innerHTML=
+    '<div class="ai-loading"><div class="ai-spinner"></div> Analysing your sabha…</div>';
+
+  showToast('✓ Review saved to cloud');
+  updateHomeReviewTeaser();
+  renderRevStats();
+
+  // Fire AI analysis
+  fetchAiAnalysis(review, REVIEWS.filter(r=>r.menuName===psMenuName));
+}
+
+/* ── Claude AI analysis after review ── */
+async function fetchAiAnalysis(latestReview, allReviewsForMenu){
+  const aiBody=document.getElementById('psAiBody');
+  if(!aiBody) return;
+
+  // Build context for Claude
+  const historyLines = allReviewsForMenu.slice(0,5).map(r=>{
+    const lo=Object.entries(r.itemLeftovers||{})
+      .map(([k,v])=>`${k}: ${v}/10 leftover`).join(', ');
+    return `• ${r.date} (${r.headcount||'?'} people, ${r.starRating}★): ${lo}`;
+  }).join('\n');
+
+  const latestLo=Object.entries(latestReview.itemLeftovers||{})
+    .map(([k,v])=>`${k}: ${v}/10 leftover`).join(', ');
+
+  const prompt=`You are a smart kitchen assistant for a Swaminarayan sabha (community vegetarian meal event). 
+After each sabha, the kitchen team rates how much of each dish was left over on a 0-10 scale (0 = all eaten, 10 = lots left).
+
+Today's sabha: ${latestReview.menuName}, ${latestReview.headcount||'unknown'} people, rated ${latestReview.starRating}/5 stars.
+Today's leftovers: ${latestLo}.
+${latestReview.notes ? 'Notes: ' + latestReview.notes : ''}
+
+Past review history for this menu:
+${historyLines || 'No previous reviews.'}
+
+Give a short, warm, specific analysis (3-5 sentences max). Cover:
+1. What went well or ran short today
+2. Any patterns you notice across history
+3. One specific, actionable quantity suggestion for next time (e.g. "increase rice by 10%" or "reduce sev by one packet")
+
+Write in plain conversational English. Do not use bullet points or headers. Be specific about item names. Keep it under 100 words.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:200,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await res.json();
+    if(data.error){
+      aiBody.innerHTML=`<div class="ai-error">AI unavailable: ${data.error.message}</div>`;
+      return;
+    }
+    const text=(data.content||[]).map(b=>b.text||'').join('').trim();
+    // Format: wrap in paragraph tags split by newlines
+    const formatted=text.split('\n').filter(l=>l.trim())
+      .map(l=>`<p>${l}</p>`).join('');
+    aiBody.innerHTML=formatted||`<p>${text}</p>`;
+  }catch(e){
+    aiBody.innerHTML=`<div class="ai-error">Couldn't reach AI — check your connection. Your review was saved.</div>`;
+  }
+}
+
 /* ============================================================
    INIT
    ============================================================ */
@@ -2506,9 +3979,65 @@ async function init(){
   renderList();
   initFirebase();
   listenLive();
+  initReviewsFirebase();
   goTo('home');
 }
 init();
 </script>
+
+<!-- ============ POST-SABHA REVIEW SHEET ============ -->
+<div class="postsabha-overlay" id="postSabhaOverlay">
+  <div class="postsabha-sheet" id="postSabhaSheet">
+    <div class="ps-handle"></div>
+
+    <div class="ps-header">
+      <div class="ps-eyebrow"><span class="ps-eyebrow-dot"></span>Sabha Complete</div>
+      <h2 class="ps-title" id="psSabhaTitle">—</h2>
+      <div class="ps-sub" id="psSabhaSub">—</div>
+    </div>
+
+    <div class="ps-body">
+
+      <div class="ps-section-label">Overall Rating</div>
+      <div class="ps-star-row" id="psStarRow">
+        <span class="ps-star" data-v="1" onclick="setPsStar(1)">★</span>
+        <span class="ps-star" data-v="2" onclick="setPsStar(2)">★</span>
+        <span class="ps-star" data-v="3" onclick="setPsStar(3)">★</span>
+        <span class="ps-star" data-v="4" onclick="setPsStar(4)">★</span>
+        <span class="ps-star" data-v="5" onclick="setPsStar(5)">★</span>
+      </div>
+
+      <div class="ps-section-label">How much was left? <span style="font-weight:400;color:var(--lilac-dim);">(0 = all gone · 10 = lots left)</span></div>
+      <div id="psItemSliders"></div>
+
+      <div class="ps-section-label">Notes</div>
+      <textarea class="ps-notes" id="psNotes" placeholder="Anything to remember for next time…" rows="2"></textarea>
+
+      <!-- AI analysis result appears here after saving -->
+      <div id="psAiSection" style="display:none;">
+        <div class="ps-section-label" style="margin-top:18px;">✨ AI Analysis</div>
+        <div class="ai-analysis-card">
+          <div class="ai-analysis-header">
+            <div class="ai-icon">🤖</div>
+            <div>
+              <div class="ai-analysis-title">Claude's Take</div>
+              <div class="ai-badge">AI • Powered by Claude</div>
+            </div>
+          </div>
+          <div class="ai-analysis-body" id="psAiBody">
+            <div class="ai-loading"><div class="ai-spinner"></div> Analysing your sabha…</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ps-actions">
+        <button class="btn btn-ghost" onclick="closePostSabha()">Close</button>
+        <button class="btn btn-primary" id="psSaveBtn" onclick="savePostSabhaReview()">Save Review ✓</button>
+      </div>
+      <div class="ps-skip-btn" onclick="closePostSabha()">Skip — don't save a review</div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
