@@ -3483,11 +3483,9 @@ function initReviewsFirebase(){
       const val = snap.val() || {};
       REVIEWS = Object.entries(val).map(([id, r])=>({...r, _fbId: id}))
         .sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
-      if(currentScreen==='reviews'){
-        renderRevStats();
-        if(revCurrentTab==='past') renderPastReviews();
-        if(revCurrentTab==='suggest') renderSuggestions();
-      }
+      renderRevStats();
+      renderPastReviews();
+      if(revCurrentTab==='suggest') renderSuggestions();
       updateHomeReviewTeaser();
     }, err=>{
       console.error('Reviews sync error', err);
@@ -3706,8 +3704,8 @@ function renderPastReviews(){
         ${loHtml}
         ${notesHtml}
         <div class="rev-card-actions">
-          <button class="rev-action-btn edit" onclick="openEditReview('${fbId}')">✏️ Edit</button>
-          <button class="rev-action-btn del" onclick="deleteReview('${fbId}')">🗑 Delete</button>
+          <button class="rev-action-btn edit" data-fbid="${fbId}" onclick="openEditReview(this.dataset.fbid)">✏️ Edit</button>
+          <button class="rev-action-btn del" data-fbid="${fbId}" onclick="deleteReview(this.dataset.fbid)">🗑 Delete</button>
         </div>
       </div>`;
   }).join('');
@@ -3723,6 +3721,9 @@ function deleteReview(fbId){
     if(fbReady && fbReviewsRef && !fbId.startsWith('local_')){
       try{
         await fbReviewsRef.child(fbId).remove();
+        // Firebase listener will re-render; also force immediately in case listener lags
+        REVIEWS = REVIEWS.filter(r=>r._fbId !== fbId);
+        renderPastReviews(); renderRevStats(); updateHomeReviewTeaser();
         showToast('Review deleted');
       }catch(e){ showToast('Delete failed — try again', true); }
     } else {
@@ -3824,6 +3825,10 @@ async function saveEditReview(){
   if(fbReady && fbReviewsRef && !editingReviewId.startsWith('local_')){
     try{
       await fbReviewsRef.child(editingReviewId).update(updated);
+      // Also update local cache immediately so UI reflects change without waiting for listener
+      const idx = REVIEWS.findIndex(rv=>rv._fbId===editingReviewId);
+      if(idx>=0) REVIEWS[idx] = {...updated, _fbId:editingReviewId};
+      renderPastReviews(); renderRevStats(); updateHomeReviewTeaser();
       showToast('✓ Review updated');
     }catch(e){ showToast('Update failed — try again', true); return; }
   } else {
