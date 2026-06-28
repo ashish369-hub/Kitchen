@@ -579,7 +579,7 @@ select.menu-select{
 
 .rev-card{
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:16px;margin-bottom:12px;
+  padding:16px;margin-bottom:12px;overflow:hidden;
 }
 .rev-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
 .rev-card-menu{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--cream);}
@@ -591,9 +591,9 @@ select.menu-select{
 .rev-leftover-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
 .rev-lo-pill{
   background:var(--card-raised);border-radius:10px;padding:8px 10px;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;min-width:0;overflow:hidden;
 }
-.rev-lo-name{font-size:12px;color:var(--cream);font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rev-lo-name{font-size:12px;color:var(--cream);font-weight:500;min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .rev-lo-bar-wrap{width:44px;flex-shrink:0;margin-left:6px;}
 .rev-lo-bar-track{height:4px;background:var(--bg-deep);border-radius:3px;overflow:hidden;}
 .rev-lo-bar-fill{height:100%;border-radius:3px;transition:width .3s;}
@@ -603,6 +603,48 @@ select.menu-select{
   font-size:12.5px;color:var(--lilac-dim);line-height:1.45;font-style:italic;
   border-left:2px solid var(--gold-deep);padding-left:10px;margin-top:10px;
 }
+
+/* ── Review card actions (edit / delete) ── */
+.rev-card-actions{
+  display:flex;align-items:center;gap:6px;
+  margin-top:12px;padding-top:10px;
+  border-top:1px solid var(--line);
+}
+.rev-action-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+  padding:8px 10px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:600;
+  transition:opacity .12s,transform .1s;
+}
+.rev-action-btn:active{transform:scale(0.97);opacity:.8;}
+.rev-action-btn.edit{background:rgba(240,184,61,0.12);color:var(--gold);border:1px solid rgba(240,184,61,0.3);}
+.rev-action-btn.del{background:rgba(224,88,75,0.10);color:var(--magenta);border:1px solid rgba(224,88,75,0.25);}
+
+/* ── Review edit overlay ── */
+.rev-edit-overlay{
+  position:fixed;inset:0;z-index:600;
+  background:rgba(6,11,20,0.80);backdrop-filter:blur(7px);
+  display:flex;align-items:flex-end;
+  opacity:0;pointer-events:none;transition:opacity .28s;
+}
+.rev-edit-overlay.show{opacity:1;pointer-events:all;}
+.rev-edit-sheet{
+  width:100%;max-height:90vh;overflow-y:auto;
+  background:var(--bg);border-top:1px solid var(--line);
+  border-radius:24px 24px 0 0;
+  padding:0 0 calc(28px + var(--safe-bottom));
+  transform:translateY(100%);
+  transition:transform .36s cubic-bezier(.32,1.1,.6,1);
+}
+.rev-edit-overlay.show .rev-edit-sheet{transform:translateY(0);}
+.rev-edit-handle{width:40px;height:4px;border-radius:4px;background:var(--line);margin:14px auto 0;}
+.rev-edit-header{
+  padding:16px 20px 14px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(240,184,61,0.08),transparent);
+}
+.rev-edit-title{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--cream);}
+.rev-edit-sub{font-size:12px;color:var(--lilac-dim);margin-top:2px;}
+.rev-edit-body{padding:18px 20px;}
 
 /* --- AI Suggestions Panel --- */
 .rev-suggestions-wrap{margin-bottom:14px;}
@@ -3649,8 +3691,9 @@ function renderPastReviews(){
       </div>` : '';
     const notesHtml = r.notes ? `<div class="rev-notes-display">"${r.notes}"</div>` : '';
     const hcHtml = r.headcount ? `· ${r.headcount} people` : '';
+    const fbId = r._fbId || '';
     return `
-      <div class="rev-card">
+      <div class="rev-card" id="revcard-${fbId}">
         <div class="rev-card-header">
           <div>
             <div class="rev-card-menu">${r.menuName}</div>
@@ -3662,8 +3705,134 @@ function renderPastReviews(){
         </div>
         ${loHtml}
         ${notesHtml}
+        <div class="rev-card-actions">
+          <button class="rev-action-btn edit" onclick="openEditReview('${fbId}')">✏️ Edit</button>
+          <button class="rev-action-btn del" onclick="deleteReview('${fbId}')">🗑 Delete</button>
+        </div>
       </div>`;
   }).join('');
+}
+
+/* ── Edit / Delete Reviews ── */
+let editingReviewId = null;
+let editRevStarVal = 0;
+let editRevItems = [];
+
+function deleteReview(fbId){
+  showConfirm('This review will be permanently deleted.', async ()=>{
+    if(fbReady && fbReviewsRef && !fbId.startsWith('local_')){
+      try{
+        await fbReviewsRef.child(fbId).remove();
+        showToast('Review deleted');
+      }catch(e){ showToast('Delete failed — try again', true); }
+    } else {
+      REVIEWS = REVIEWS.filter(r=>r._fbId !== fbId);
+      renderPastReviews(); renderRevStats(); updateHomeReviewTeaser();
+      showToast('Review deleted');
+    }
+  }, {title:'Delete Review', okLabel:'Delete'});
+}
+
+function openEditReview(fbId){
+  const r = REVIEWS.find(rv=>rv._fbId===fbId);
+  if(!r){ showToast('Review not found', true); return; }
+  editingReviewId = fbId;
+  editRevStarVal = r.starRating || 0;
+  editRevItems = Object.keys(r.itemLeftovers||{});
+
+  document.getElementById('editRevTitle').textContent = r.menuName;
+  document.getElementById('editRevSub').textContent = r.date + (r.headcount ? ` · ${r.headcount} people` : '');
+  document.getElementById('editRevHeadcount').value = r.headcount || '';
+  document.getElementById('editRevNotes').value = r.notes || '';
+
+  // Stars
+  document.querySelectorAll('.edit-rev-star').forEach(s=>{
+    s.classList.toggle('on', parseInt(s.dataset.v) <= editRevStarVal);
+  });
+
+  // Item sliders
+  const lo = r.itemLeftovers || {};
+  const wrap = document.getElementById('editRevSliders');
+  wrap.innerHTML = editRevItems.map((name, i)=>{
+    const val = lo[name] ?? 5;
+    const emoji = autoEmojiForDivision(name,'raw');
+    return `<div class="rev-item-row">
+      <div class="rev-item-name">${emoji} ${name}</div>
+      <div class="rev-slider-wrap">
+        <div class="rev-slider-label">None left</div>
+        <input class="rev-slider" type="range" min="0" max="10" value="${val}"
+          id="editRevSlider_${i}"
+          oninput="document.getElementById('editRevSliderVal_${i}').textContent=this.value;updateEditRevSliderColor(this)">
+        <div class="rev-slider-val" id="editRevSliderVal_${i}">${val}</div>
+        <div class="rev-slider-label" style="text-align:right;">Lots left</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  editRevItems.forEach((_,i)=>{
+    const s = document.getElementById('editRevSlider_'+i);
+    if(s) updateEditRevSliderColor(s);
+  });
+
+  document.getElementById('revEditOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+
+function closeEditReview(){
+  document.getElementById('revEditOverlay').classList.remove('show');
+  document.body.style.overflow='';
+  editingReviewId = null;
+}
+
+function setEditRevStar(n){
+  editRevStarVal = n;
+  document.querySelectorAll('.edit-rev-star').forEach(s=>{
+    s.classList.toggle('on', parseInt(s.dataset.v) <= n);
+  });
+}
+
+function updateEditRevSliderColor(slider){
+  const v = parseInt(slider.value);
+  if(v<=2) slider.style.accentColor='#7FD97F';
+  else if(v<=5) slider.style.accentColor='#F0B83D';
+  else slider.style.accentColor='#E0584B';
+}
+
+async function saveEditReview(){
+  if(!editRevStarVal){ showToast('Give a star rating'); return; }
+  const r = REVIEWS.find(rv=>rv._fbId===editingReviewId);
+  if(!r){ showToast('Review not found', true); return; }
+
+  const headcountRaw = document.getElementById('editRevHeadcount').value.trim();
+  const notes = document.getElementById('editRevNotes').value.trim();
+  const itemLeftovers = {};
+  editRevItems.forEach((name,i)=>{
+    const s = document.getElementById('editRevSlider_'+i);
+    if(s) itemLeftovers[name] = parseInt(s.value);
+  });
+
+  const updated = {
+    ...r,
+    headcount: parseInt(headcountRaw)||null,
+    starRating: editRevStarVal,
+    notes,
+    itemLeftovers,
+    updatedAt: Date.now()
+  };
+  delete updated._fbId;
+
+  if(fbReady && fbReviewsRef && !editingReviewId.startsWith('local_')){
+    try{
+      await fbReviewsRef.child(editingReviewId).update(updated);
+      showToast('✓ Review updated');
+    }catch(e){ showToast('Update failed — try again', true); return; }
+  } else {
+    const idx = REVIEWS.findIndex(rv=>rv._fbId===editingReviewId);
+    if(idx>=0) REVIEWS[idx] = {...updated, _fbId:editingReviewId};
+    renderPastReviews(); renderRevStats(); updateHomeReviewTeaser();
+    showToast('Review updated (local)');
+  }
+  closeEditReview();
 }
 
 /* ── Smart Suggestions (pattern-based, no API call needed) ── */
@@ -4035,6 +4204,44 @@ init();
         <button class="btn btn-primary" id="psSaveBtn" onclick="savePostSabhaReview()">Save Review ✓</button>
       </div>
       <div class="ps-skip-btn" onclick="closePostSabha()">Skip — don't save a review</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EDIT REVIEW OVERLAY ============ -->
+<div class="rev-edit-overlay" id="revEditOverlay">
+  <div class="rev-edit-sheet">
+    <div class="rev-edit-handle"></div>
+    <div class="rev-edit-header">
+      <div class="rev-edit-title" id="editRevTitle">Edit Review</div>
+      <div class="rev-edit-sub" id="editRevSub"></div>
+    </div>
+    <div class="rev-edit-body">
+      <div class="rev-section-label">Headcount</div>
+      <input class="rev-headcount-input" id="editRevHeadcount" type="number" placeholder="e.g. 120" inputmode="numeric">
+
+      <div class="rev-section-label">Overall Rating</div>
+      <div class="rev-overall-row">
+        <div class="rev-overall-label">How did it go?</div>
+        <div class="rev-stars" id="editRevStars">
+          <span class="rev-star edit-rev-star" data-v="1" onclick="setEditRevStar(1)">★</span>
+          <span class="rev-star edit-rev-star" data-v="2" onclick="setEditRevStar(2)">★</span>
+          <span class="rev-star edit-rev-star" data-v="3" onclick="setEditRevStar(3)">★</span>
+          <span class="rev-star edit-rev-star" data-v="4" onclick="setEditRevStar(4)">★</span>
+          <span class="rev-star edit-rev-star" data-v="5" onclick="setEditRevStar(5)">★</span>
+        </div>
+      </div>
+
+      <div class="rev-section-label">Leftover Levels</div>
+      <div id="editRevSliders"></div>
+
+      <div class="rev-section-label">Notes</div>
+      <textarea class="rev-notes-input" id="editRevNotes" placeholder="Any notes about this sabha…" rows="3"></textarea>
+
+      <div class="btn-row" style="margin-top:18px;">
+        <button class="btn btn-ghost" onclick="closeEditReview()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveEditReview()">Save Changes ✓</button>
+      </div>
     </div>
   </div>
 </div>
